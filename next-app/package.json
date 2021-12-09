@@ -1,0 +1,29 @@
+{
+  "name": "socketio-example-next-app",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.5.5",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
+    "@chakra-ui/react": "^1.7.2",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "apollo-upload-client": "^17.0.0",
+    "cross-fetch": "^3.1.4",
+    "framer-motion": "^4",
+    "graphql": "^16.0.1",
+    "next": "12.0.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-next": "12.0.4"
+  }
+}
