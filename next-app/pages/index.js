@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Button, Center, Container, Heading, Link, Stack, Text } from '@chakra-ui/react';
+import { Button, Center, Container, Heading, Link, Stack, Text } from '@chakra-ui/react';
 
 import { useAuth } from '../lib/authentication';
 
