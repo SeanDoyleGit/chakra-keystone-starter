@@ -1,8 +1,18 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
+export const SIGN_UP = gql`
+  mutation Signup($name: String!, $email: String!, $password: String!) {
+    user: createUser(data: { name: $name, email: $email, password: $password }) {
+      id
+      name
+      email
+    }
+  }
+`;
+
 export const SIGN_IN = gql`
-  mutation signin($email: String!, $password: String!) {
+  mutation Signin($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {
       ... on UserAuthenticationWithPasswordSuccess {
         item {
@@ -11,15 +21,16 @@ export const SIGN_IN = gql`
           email
         }
       }
+      ... on UserAuthenticationWithPasswordFailure {
+        message
+      }
     }
   }
 `;
 
 export const SIGN_OUT = gql`
-  mutation {
-    unauthenticateUser {
-      success
-    }
+  mutation Signout {
+    endSession
   }
 `;
 
@@ -73,13 +84,33 @@ export const AuthProvider = ({ apolloClient, children }) => {
     if (authenticateUserWithPassword?.item) {
       setUser(authenticateUserWithPassword.item);
       setIsLoading(false);
+    } else if (authenticateUserWithPassword?.message) {
+      setIsLoading(false);
+      throw new Error(authenticateUserWithPassword?.message);
     }
+  };
+
+  const signup = async ({ name, email, password }) => {
+    const {
+      data: { user },
+      error,
+    } = await apolloClient.mutate({
+      mutation: SIGN_UP,
+      fetchPolicy: 'no-cache',
+      variables: { name, email, password },
+    });
+
+    if (error || !user) {
+      throw error;
+    }
+
+    await signin({ email, password });
   };
 
   const signout = async () => {
     setIsLoading(true);
     const {
-      data: { unauthenticateUser },
+      data: { endSession },
       error,
     } = await apolloClient.mutate({
       mutation: SIGN_OUT,
@@ -88,13 +119,16 @@ export const AuthProvider = ({ apolloClient, children }) => {
 
     if (error) {
       setIsLoading(false);
-      throw error;
+      throw new Error(error);
     }
-    if (unauthenticateUser?.success) {
+
+    if (endSession) {
       setUser(null);
       setIsLoading(false);
+      await apolloClient.resetStore();
+    } else {
+      throw new Error('Unable to signout');
     }
-    await apolloClient.resetStore();
   };
 
   return (
@@ -104,6 +138,7 @@ export const AuthProvider = ({ apolloClient, children }) => {
         isLoading: isLoading,
         signin,
         signout,
+        signup,
         user,
       }}
     >
