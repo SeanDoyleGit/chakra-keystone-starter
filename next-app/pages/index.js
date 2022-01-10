@@ -3,10 +3,6 @@ import { Box, Button, Center, Container, Heading, Link, Stack, Text } from '@cha
 
 import { useAuth } from '../lib/authentication';
 
-const Card = (props) => {
-  return <Box boxShadow="xs" p="6" rounded="md" bg="white" {...props} />;
-};
-
 export default function Home() {
   const { user, isAuthenticated, signout } = useAuth();
 
