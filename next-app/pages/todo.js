@@ -48,21 +48,45 @@ const Todo = ({ id, label, onDelete }) => {
 };
 
 export default function Home() {
-  // const { data, loading, refetch } = useQuery(GET_TODOS, { context: { headers: { 'cache-control': 'max-age=0' } } });
   const { data, loading, refetch } = useQuery(GET_TODOS);
+  // const { data, loading, refetch } = useQuery(GET_TODOS, { context: { headers: { 'cache-control': 'max-age=0' } } });
 
   const [addTodo] = useMutation(ADD_TODO);
   const [removeTodo] = useMutation(REMOVE_TODO);
 
+  // const [addTodo] = useMutation(ADD_TODO, {
+  //   update: (cache, { data: createData }) => {
+  //     const { todos } = cache.readQuery({
+  //       query: GET_TODOS,
+  //     });
+  //     cache.writeQuery({
+  //       data: { todos: todos.concat([createData.createTodo]) },
+  //       query: GET_TODOS,
+  //     });
+  //   },
+  // });
+
+  // const [removeTodo] = useMutation(REMOVE_TODO, {
+  //   update: (cache, { data: deleteData }) => {
+  //     const { todos } = cache.readQuery({
+  //       query: GET_TODOS,
+  //     });
+  //     cache.writeQuery({
+  //       data: { todos: todos.filter((todo) => todo.id !== deleteData.deleteTodo.id) },
+  //       query: GET_TODOS,
+  //     });
+  //   },
+  // });
+
   const handleAddTodo = async (label) => {
     await addTodo({ variables: { label } });
-    await refetch();
+    // await refetch();
     // await refetch({ fetchPolicy: 'network-only' });
   };
 
   const handleRemoveTodo = async (id) => {
     await removeTodo({ variables: { id } });
-    await refetch();
+    // await refetch();
     // await refetch({ fetchPolicy: 'network-only' });
   };
 
