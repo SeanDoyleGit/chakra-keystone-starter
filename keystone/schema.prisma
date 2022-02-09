@@ -17,3 +17,8 @@ model User {
   email    String @unique @default("")
   password String
 }
+
+model Todo {
+  id    String @id @default(cuid())
+  label String @default("")
+}

@@ -13,4 +13,14 @@ export const lists = {
       password: password({ validation: { isRequired: true } }),
     },
   }),
+  Todo: list({
+    fields: {
+      label: text({
+        validation: { isRequired: true },
+      }),
+    },
+    graphql: {
+      cacheHint: { maxAge: 60 * 60, scope: 'PUBLIC' },
+    },
+  }),
 };
