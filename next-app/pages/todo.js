@@ -47,7 +47,8 @@ const Todo = ({ id, label, onDelete }) => {
   );
 };
 
-export default function Home() {
+// Apollo Cache examples using a todo list
+export default function ToDo() {
   const { data, loading, refetch } = useQuery(GET_TODOS);
   // const { data, loading, refetch } = useQuery(GET_TODOS, { context: { headers: { 'cache-control': 'max-age=0' } } });
 
