@@ -40,7 +40,6 @@ export default function Home() {
       <Head>
         <title>Sign In</title>
         <meta name="description" content="An example chakra/nextjs frontend for keystone 6 | Sign Up" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box minH="100vh" py="12" px={{ base: '4', lg: '8' }}>
         <Box maxW="md" mx="auto">

@@ -1,5 +1,5 @@
 {
-  "name": "socketio-example-next-app",
+  "name": "chakra-keystone-starter-next-app",
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev -p 3001",

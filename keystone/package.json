@@ -1,5 +1,5 @@
 {
-  "name": "socketio-example-keystone",
+  "name": "chakra-keystone-starter-keystone",
   "version": "0.0.1",
   "scripts": {
     "dev": "keystone dev",
