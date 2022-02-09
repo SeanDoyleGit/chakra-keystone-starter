@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { Button, Center, Container, Heading, Link, Stack, Text } from '@chakra-ui/react';
 
 import { useAuth } from '../lib/authentication';
@@ -11,6 +12,9 @@ export default function Home() {
 
   return (
     <Container>
+      <Head>
+        <title>Chakra/Keystone Example</title>
+      </Head>
       <Center height="100vh" pb={40}>
         <Stack>
           {isAuthenticated && <Heading as="h1">Hello {user && user.name}</Heading>}

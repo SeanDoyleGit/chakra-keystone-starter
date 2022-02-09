@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import getConfig from 'next/config';
 import { ApolloLink, ApolloClient, InMemoryCache } from '@apollo/client';
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
 import { createUploadLink } from 'apollo-upload-client';
 import fetch from 'cross-fetch';
+import { sha256 } from 'crypto-hash';
 
 const {
   publicRuntimeConfig: { serverUrl },
@@ -30,11 +32,15 @@ function createLinks() {
 }
 
 function createApolloClient() {
+  const persistedQueriesLink = createPersistedQueryLink({ sha256, useGETForHashedQueries: true });
+
   return new ApolloClient({
     connectToDevTools: isClient(),
     ssrMode: isServer(), // Disables forceFetch on the server (so queries are only run once)
-    link: ApolloLink.from(createLinks()),
     cache: new InMemoryCache(),
+
+    // link: persistedQueriesLink.concat(ApolloLink.from(createLinks())),
+    link: ApolloLink.from(createLinks()),
   });
 }
 
